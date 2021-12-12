@@ -1,0 +1,71 @@
+.header {
+    // grid-row: 1 / 2;    row areas were not defined for any of thse grid items cause the order in which they're placed naturally in markup are the desired order for our grid
+    grid-column: full-start / col-end 6;
+    background-image: linear-gradient(
+        rgba(#101d2c, .92),
+        rgba(#101d2c, .92),
+    ), url("../img/hero.jpeg");
+    background-size: cover;
+    background-position: center;
+    padding: 8rem;
+    padding-top: 4rem;
+    
+    display: grid;
+    grid-template-rows: 1fr min-content minmax(6rem, min-content) 1fr;  //CCC:1fr defined for only the first row track makes it occupy all the empty space and the other rows to be sized automatically(this is only possible because the grid container's height is predefined). 2nd row is given a height of min-content and the 3rd 6rem
+    grid-template-columns: minmax(min-content, max-content);  //the header is made a grid with only 1 column with width ranging from min-content to max-content
+    row-gap: 1.5rem;
+
+    @media only screen and (max-width: $bp-medium) {  
+        grid-column: full-start / full-end;
+    }
+
+    @media only screen and (max-width: $bp-small) {
+        padding: 5rem;
+    }
+
+    &__logo {
+        height: 3rem;
+        justify-self: center;
+    }
+    
+    &__btn {
+        justify-self: start;
+        align-self: start;
+    }
+
+    &__seenon-text {
+        font-size: 1.6rem;
+        color: var(--color-grey-light-2);
+
+        display: grid;
+        grid-template-columns: 1fr max-content 1fr;
+        column-gap: 2rem;
+        align-items: center;  //to vertically center the before, after grid items(the 2 lines) in their cells
+        &::before,
+        &::after {
+            content: "";
+            height: 1px;  //no width was specified cause by default the 2 lines would be justified to stretch the full width of their cells which is 1fr
+            display: block;
+            background-color: currentColor;
+        }
+    }
+
+    &__seenon-logos {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        column-gap: 3rem;
+        justify-items: center;   //center each img element in their grid cell
+        align-content: center;  //center the row track along the vertical axis
+        
+        /* using flex to achieve the same result
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center; */
+
+        img {
+            max-height: 2.5rem;
+            max-width: 100%;
+            filter: brightness(.7);
+        }
+    }
+}

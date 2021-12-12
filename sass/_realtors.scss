@@ -1,0 +1,51 @@
+.realtors {
+    grid-column: col-start 7 / full-end;
+    background-color: var(--color-secondary);
+    padding: 3rem;
+
+    display: grid;
+    row-gap: 2rem;
+    justify-content: center;    //to horizontally center the 2 row tracks h3 and realtors__list in the realtors grid container
+    align-content: center;      //to vertically center the column tracks in the realtors grid container
+    justify-items: center;      //to horizontally center each grid item(h3 and list) in their grid cells
+
+    /* using flex with the h3 having margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; */
+
+    @media only screen and (max-width: $bp-medium) {  
+        grid-column: full-start / full-end;
+    }
+
+    &__list {
+        display: grid;
+        grid-template-columns: min-content max-content;
+        row-gap: 5vh;
+        column-gap: 2rem;
+        align-items: center;    //to vertically center the img and realtors__details in their grid cells
+        
+        @media only screen and (max-width: $bp-medium) {  
+            grid-template-columns: repeat(3, min-content max-content); //(min-content max-content)*3 == 6 column tracks
+            align-content: center;
+        }
+
+        @media only screen and (max-width: $bp-small) {
+            grid-template-columns: min-content max-content;
+        }
+    
+    }
+
+    &__img {
+        width: 7rem;  //the width is specified cause it determines the width of the 1st column tracked set to min-content
+        border-radius: 50%;
+        display: block;     //CCC: good practise to display img elements as block sometimes
+    }
+
+    &__sales {
+        text-transform: uppercase;
+        color: var(--color-grey-light-2);
+        margin-top: -3px;
+    }
+}

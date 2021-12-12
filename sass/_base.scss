@@ -1,0 +1,67 @@
+:root {
+    --color-primary: #c69963;
+    --color-primary-dark: #B28451;
+
+    --color-secondary: #101d2c;
+
+    --color-grey-light-1: #f9f7f6;
+    --color-grey-light-2: #aaa;
+
+    --color-grey-dark-1: #54483A;
+    --color-grey-dark-2: #6D5D4B;
+
+    --font-primary: 'Nunito', sans-serif;
+    --font-display: 'Josefin Sans', sans-serif;
+}
+
+//The breakpoints used here are not the width range of different devices screens but are set to where the design starts to break (This is th best approach to media queries)
+$bp-largest: 75em;              //1200px
+$bp-large: 62.5em;             //1000px
+$bp-medium: 50em;               //800px
+$bp-small: 37.5em;              //600px
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%;    //1rem = 10px
+
+    @media only screen and (max-width: $bp-largest) {
+        font-size: 50%;  //1rem = 8px
+    }
+}
+
+body {
+    font-family: var(--font-primary);
+    color: var(--color-grey-dark-2);
+    font-weight: 300;
+    line-height: 1.6;
+}
+
+.container {
+    display: grid;  
+    grid-template-rows: 80vh min-content 40vw repeat(3, min-content); //6 responsive rows defined, 9 grid items from markup
+    //CCC:it is a common practise in web design to use 8 or 12 or 16 predefined columns. The rows lines are not named cause in an overall layout like this, the focus is mostly on the column. Sometimes we dont even size the rows we just want min-content for each e.g repeat(6, min-content)
+    grid-template-columns: [sidebar-start] 6rem [sidebar-end full-start] minmax(6rem, 1fr) [center-start] repeat(8, [col-start] minmax(min-content, 14rem) [col-end]) [center-end] minmax(6rem, 1fr) [full-end];   //the total centered 8columns width should be 1140px thereabout, 1140px/8 ~ 140px = 14rem. Using just 14rem for each column width is unresponsive so we use min-width of min-content and max-width of 14rem. Also, a sidebar column of width 4rem added. Lastly, center the 8 columns between the 1st column(sidebar) and the end of the viewport width. We can't use justify content: center here as this would center all the column tracks including the sidebar. So we add 2 new columns of the same width(1fr each = both occupying the same fractional space) one to the left of the 8columns the other to the right i.e 1fr 8columns 1fr. The column lines are then named afterwards. 1fr is chnaged to minmax(6rem, 1fr) cause as we decrease viewport width, the 2 1fr columns shrink and try to fit the remaining space(the 8 columns stikk maintaining their 14rem) it gets to the point where 1fr becomes 0 cause no space left for them, this is undesirable so we set their min-width to be 6rem so the 8columns could shrink to min-content if need be
+
+    @media only screen and (max-width: $bp-large) {  //at 1000px remove the 1st column and add a new row track of height 6rem to the top of row tracks
+        grid-template-rows: 6rem 80vh min-content 40vw repeat(3, min-content);;
+        grid-template-columns: [full-start] minmax(6rem, 1fr) [center-start] repeat(8, [col-start] minmax(min-content, 14rem) [col-end]) [center-end] minmax(6rem, 1fr) [full-end];
+    }
+
+    @media only screen and (max-width: $bp-medium) {  //at 800px, remove realtors from the right side and make it span below the header, also story content
+        grid-template-rows: 6rem calc(100vh - 6rem);  //the other rows are created implicitly
+    }
+    
+}
+
+
+
+
+//determine what the grid container would be, in this case the body element. The overall layout is marked up where the grid items (with placeholder texts in them) are made the direct children of the grid container. In each of their CSS modules, the grid items are given a diff backgroundcolor(also placeholder paddings) so we can identify them as we construct the grid. We start by basically defining the number of row tracks and their respective heights(while simultaneouly thinking about responsiveness). While doing this, we ignore where each grid items are placed(naturally by source order) as we will change that afterwards using grid area(i.e grid-row/grid-column). Same with column's width but more complicated. After the desired grid layout is constructed each grid item is placed in its grid area and built up one after the other 

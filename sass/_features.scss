@@ -1,0 +1,33 @@
+.features {
+    grid-column: center-start / center-end;
+    margin: 15rem 0;
+
+    display: grid;
+    //CCC:we could specify the row tracks by grid-template-rows: auto auto; but that would be unnecessary cause thats what is gonna happen anyway if it wasnt defined
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));  //CCC:as soon as one of column tracks gets narrower than 20rem, one of the column tracks disappears(it adds to the row tracks)
+    gap: 6rem;
+    align-items: start;
+
+    @media only screen and (max-width: $bp-small) {
+        margin: 8rem 0;
+        gap: 3rem;
+    }
+}
+
+.feature {
+    display: grid;
+    grid-template-columns: min-content 1fr;
+    gap: 1.5rem 2.5rem;
+
+    &__icon {
+        fill: var(--color-primary);
+        height: 4.5rem;
+        width: 4.5rem;
+        grid-row: 1 / span 2;  //CCC: 1 / -1 , -1 can only be used to define the last row/column line if the grid cells are explictly defined, no grid-template-rows were defined so we have no explicitly defined grid. Just implicit ones
+        transform: translateY(-.7rem);
+    }
+
+    &__text {
+        font-size: 1.7rem;
+    }
+}

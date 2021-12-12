@@ -1,0 +1,86 @@
+.homes {
+    grid-column: center-start / center-end;
+    margin: 15rem 0;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    gap: 7rem;
+
+    @media only screen and (max-width: $bp-small) {
+        margin: 8rem 0;
+        gap: 4rem;
+    }
+}
+
+.home {
+    background-color: var(--color-grey-light-1);
+    position: relative;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 3.5rem;
+
+    &__img {
+        grid-row: 1 / 2;
+        grid-column: 1 / -1;
+        z-index: 1;
+        width: 100%;
+        display: block;  //CCC: Sometimes img element leaves a lil weird space between it and other elements. Display block fixes it(well using grid also fixed it but im leaving this)
+    }
+
+    &__like {
+        grid-row: 1 / 2;
+        grid-column: 2 / 3;
+        z-index: 10;
+        height: 2.5rem;
+        width: 2.5rem;
+        fill: var(--color-primary);
+        justify-self: end;
+        margin-top: 1rem ;
+        margin-right: 1rem ;
+    }
+
+    &__name {
+        grid-row: 1 / 2;
+        grid-column: 1 / -1;
+        z-index: 11;
+        width: 80%;
+        justify-self: center;
+        align-self: end;
+        font-size: 1.6rem;
+        color: #fff;
+        font-family: var(--font-display);
+        font-weight: 400;
+        text-align: center;
+        padding: 1.25rem;
+        background-color: var(--color-secondary);
+        transform: translateY(50%);
+    } 
+
+    &__location,
+    &__rooms,
+    &__area,
+    &__price {
+        font-size: 1.5rem;
+        margin-left: 2rem;
+
+        display: flex;
+        align-items: center;
+
+        svg {
+            height: 2rem;
+            width: 2rem;
+            fill: var(--color-primary);
+            margin-right: 1rem;
+        }
+    }
+
+    &__location,
+    &__rooms {
+        margin-top: 2.5rem; //the 2 top ones should have these margin to further add to the gap created between them and the heading
+    }
+
+    &__button {
+        grid-column: 1 / -1;
+    }
+}
